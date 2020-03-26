@@ -34,7 +34,7 @@ You can use any text editor for writing HTML, CSS, and JavaScript. However, we r
 ```css
 @import '~mapbox-gl/dist/mapbox-gl.css';
 ```
-4. Add code to the src/components/my-map.jsx:
+4. Add the code to the src/components/my-map.jsx:
 ```javascript
 import React, { useEffect } from 'react'; 
 import './my-map.scss';
@@ -73,7 +73,57 @@ export default MyMap;
 5. Replace YOUR_API_KEY_HERE with an API key you've got on [Geoapify MyProjects](https://myprojects.geoapify.com).
 6. Set the [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
 
-## STEP 2 - Option 2. Display a map with Leaflet
+## STEP 2 - Option 2. Display a map with [Leaflet](https://leafletjs.com/)
+1. Go to the application directory.
+2. Run `npm i leaflet mapbox-gl mapbox-gl-leaflet` to install Leaflet library and Mapbox GL Leaflet plugin to display vector maps. By default, Leaflet doesn't have the support of vector maps and map style.
+3. Add Leaflet and Mapbox GL styles to the index.scss:
+```css
+@import '~mapbox-gl/dist/mapbox-gl.css';
+@import '~leaflet/dist/leaflet.css';
+```
+4. Add the code to the src/components/my-map.jsx:
+```javascript
+import React, { useEffect } from 'react';
+import './my-map.scss';
+import L from 'leaflet';
+import {} from 'mapbox-gl-leaflet';
+
+function MyMap() {
+  let mapContainer;
+
+  const initialState = {
+    lng: 11,
+    lat: 49,
+    zoom: 4
+  };
+
+  useEffect(() => {
+    const map = L.map(mapContainer).setView([initialState.lat, initialState.lng], initialState.zoom);
+
+    // the attribution is required for the Geoapify Free tariff plan
+    map.attributionControl.setPrefix('').addAttribution('Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>');
+
+    // The API Key provided is restricted to JSFiddle website
+    // Get your own API Key on https://myprojects.geoapify.com
+    var myAPIKey = YOUR_API_KEY_HERE;
+    const mapStyle = 'https://maps.geoapify.com/v1/styles/osm-carto/style.json';
+
+    const gl = L.mapboxGL({
+      style: `${mapStyle}?apiKey=${myAPIKey}`,
+      accessToken: 'no-token'
+    }).addTo(map);
+  }, []);
+
+  return (
+    <div className="map-container" ref={el => mapContainer = el}>
+    </div>
+  )
+}
+
+export default MyMap;
+```
+5. Replace YOUR_API_KEY_HERE with an API key you've got on [Geoapify MyProjects](https://myprojects.geoapify.com).
+6. Set the [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
 
 ## STEP 2 - Option 3. Display a map with OpenLayers
 
