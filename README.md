@@ -44,7 +44,7 @@ function MyMap() {
   let mapContainer;
 
   useEffect(() => {
-    const myAPIKey = YOUR_API_KEY_HERE; 
+    const myAPIKey = 'YOUR_API_KEY_HERE'; 
     const mapStyle = 'https://maps.geoapify.com/v1/styles/osm-carto/style.json';
 
     const initialState = {
@@ -71,7 +71,7 @@ function MyMap() {
 export default MyMap;
 ```
 5. Replace YOUR_API_KEY_HERE with an API key you've got on [Geoapify MyProjects](https://myprojects.geoapify.com).
-6. Set the [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
+6. Set the mapStyle variable to [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
 
 # STEP 2 - Option 2. Display a map with [Leaflet](https://leafletjs.com/)
 1. Go to the application directory.
@@ -105,7 +105,7 @@ function MyMap() {
 
     // The API Key provided is restricted to JSFiddle website
     // Get your own API Key on https://myprojects.geoapify.com
-    var myAPIKey = YOUR_API_KEY_HERE;
+    var myAPIKey = 'YOUR_API_KEY_HERE';
     const mapStyle = 'https://maps.geoapify.com/v1/styles/osm-carto/style.json';
 
     const gl = L.mapboxGL({
@@ -123,7 +123,7 @@ function MyMap() {
 export default MyMap;
 ```
 5. Replace YOUR_API_KEY_HERE with an API key you've got on [Geoapify MyProjects](https://myprojects.geoapify.com).
-6. Set the [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
+6. Set the mapStyle variable to [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
 
 # STEP 2 - Option 3. Display a map with [OpenLayers](https://openlayers.org)
 1. Go to the application directory.
@@ -149,7 +149,7 @@ function MyMap() {
       zoom: 4
     };
 
-    const myAPIKey = "6dc7fb95a3b246cfa0f3bcef5ce9ed9a";
+    const myAPIKey = 'YOUR_API_KEY_HERE';
     const mapStyle = 'https://maps.geoapify.com/v1/styles/osm-carto/style.json';
 
     olms(mapContainer, `${mapStyle}?apiKey=${myAPIKey}`).then((map) => {
@@ -167,7 +167,7 @@ function MyMap() {
 export default MyMap;
 ```
 5. Replace YOUR_API_KEY_HERE with an API key you've got on [Geoapify MyProjects](https://myprojects.geoapify.com).
-6. Set the [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use.
+6. Set the mapStyle variable to [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
 
 ## Build the application
 Run `npm run build` from the application directory.<br />
