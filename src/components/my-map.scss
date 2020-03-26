@@ -1,0 +1,13 @@
+.map-container {
+    height: 100%;
+    width: 100%;
+}
+
+.placeholder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    .placeholder-text {
+        margin: auto;
+    }
+}
