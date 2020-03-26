@@ -132,7 +132,7 @@ export default MyMap;
 ```css
 @import '~ol/ol.css';
 ```
-4. 4. Add the code to the src/components/my-map.jsx:
+4. Add the code to the src/components/my-map.jsx:
 ```javascript
 import React, { useEffect } from 'react';
 import './my-map.scss';
