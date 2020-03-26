@@ -4,7 +4,7 @@ import MyMap from './components/my-map';
 
 function App() {
   return (
-    <MyMap></MyMap>
+    <MyMap />
   );
 }
 
