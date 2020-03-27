@@ -103,8 +103,6 @@ function MyMap() {
     // the attribution is required for the Geoapify Free tariff plan
     map.attributionControl.setPrefix('').addAttribution('Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>');
 
-    // The API Key provided is restricted to JSFiddle website
-    // Get your own API Key on https://myprojects.geoapify.com
     var myAPIKey = 'YOUR_API_KEY_HERE';
     const mapStyle = 'https://maps.geoapify.com/v1/styles/osm-carto/style.json';
 
