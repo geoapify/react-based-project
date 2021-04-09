@@ -27,18 +27,26 @@ We have a Freemium pricing model. Start using our services now for FREE and exte
 ### Text editor
 You can use any text editor for writing HTML, CSS, and JavaScript. However, we recommend you try [Visual Studio Code](https://code.visualstudio.com).
 
-# STEP 2 - Option 1. Display a map with [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/)
+# STEP 2 - Option 1. Display a map with [MapLibre GL](https://www.npmjs.com/package/maplibre-gl)(open-source fork of Mapbox GL)
+
+----
+
+In December 2020 the Mapbox GL JS version 2.0 was released under a proprietary license. So Mapbox GL 2.x not under the 3-Clause BSD license anymore. 
+The [MapLibre GL](https://github.com/maplibre/maplibre-gl-js) is the official open-source fork of Mapbox GL.
+
+----
+
 1. Go to the application directory.
-2. Run `npm install mapbox-gl` to install Mapbox GL library.
+2. Run `npm i maplibre-gl` to install Mapbox GL library.
 3. Add Mapbox GL styles to the index.scss:
 ```css
-@import '~mapbox-gl/dist/mapbox-gl.css';
+@import '~maplibre-gl/dist/maplibre-gl.css';
 ```
 4. Add the code to the src/components/my-map.jsx:
 ```javascript
 import React, { useEffect } from 'react'; 
 import './my-map.scss';
-import mapboxgl from 'mapbox-gl';
+import maplibre from 'maplibre-gl';
 
 function MyMap() {
   let mapContainer;
@@ -53,7 +61,7 @@ function MyMap() {
       zoom: 4
     };
 
-    const map = new mapboxgl.Map({
+    const map = new maplibre.Map({
       container: mapContainer,
       style: `${mapStyle}?apiKey=${myAPIKey}`,
       center: [initialState.lng, initialState.lat],
@@ -74,11 +82,19 @@ export default MyMap;
 6. Set the mapStyle variable to [Map style](https://apidocs.geoapify.com/docs/maps/map-tiles/map-tiles) you want to use. 
 
 # STEP 2 - Option 2. Display a map with [Leaflet](https://leafletjs.com/)
+
+----
+
+The Leaflet library doesn't have native support for vector map tiles. There a number of Leaflet plugins that may help o visualize vector maps. However, none of them is actively supported.
+
+This tutorial contains instructions on how to visualize raster map tiles. Note, that you need in different vector maps you need to take care of high-resolution screens. Use the '@2x' suffix to get high-resolution map tile images.
+
+----
+
 1. Go to the application directory.
-2. Run `npm i leaflet mapbox-gl mapbox-gl-leaflet` to install Leaflet library and Mapbox GL Leaflet plugin to display vector maps. By default, Leaflet doesn't have the support of vector maps and map style.
+2. Run `npm i leaflet` to install Leaflet library.
 3. Add Leaflet and Mapbox GL styles to the index.scss:
 ```css
-@import '~mapbox-gl/dist/mapbox-gl.css';
 @import '~leaflet/dist/leaflet.css';
 ```
 4. Add the code to the src/components/my-map.jsx:
@@ -86,7 +102,6 @@ export default MyMap;
 import React, { useEffect } from 'react';
 import './my-map.scss';
 import L from 'leaflet';
-import {} from 'mapbox-gl-leaflet';
 
 function MyMap() {
   let mapContainer;
@@ -100,16 +115,19 @@ function MyMap() {
 
     const map = L.map(mapContainer).setView([initialState.lat, initialState.lng], initialState.zoom);
 
-    // the attribution is required for the Geoapify Free tariff plan
-    map.attributionControl.setPrefix('').addAttribution('Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>');
-
     var myAPIKey = 'YOUR_API_KEY_HERE';
-    const mapStyle = 'https://maps.geoapify.com/v1/styles/osm-carto/style.json';
 
-    const gl = L.mapboxGL({
-      style: `${mapStyle}?apiKey=${myAPIKey}`,
-      accessToken: 'no-token'
+    var isRetina = L.Browser.retina;
+    var baseUrl = "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey={apiKey}";
+    var retinaUrl = "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey={apiKey}";
+    
+    L.tileLayer(isRetina ? retinaUrl : baseUrl, {
+      attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>',
+      apiKey: myAPIKey,
+      maxZoom: 20,
+      id: 'osm-bright',
     }).addTo(map);
+
   }, [mapContainer]);
 
   return (
