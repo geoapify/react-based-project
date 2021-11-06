@@ -48,7 +48,7 @@ import React, { useEffect } from 'react';
 import './my-map.scss';
 import maplibre from 'maplibre-gl';
 
-function MyMap() {
+const MyMap = ({mapIsReadyCallback /* To be triggered when a map object is created */ }) => {
   let mapContainer;
 
   useEffect(() => {
@@ -67,6 +67,8 @@ function MyMap() {
       center: [initialState.lng, initialState.lat],
       zoom: initialState.zoom
       });
+
+    mapIsReadyCallback(map);
 
   }, [mapContainer]);
 
@@ -103,7 +105,7 @@ import React, { useEffect } from 'react';
 import './my-map.scss';
 import L from 'leaflet';
 
-function MyMap() {
+const MyMap = ({mapIsReadyCallback /* To be triggered when a map object is created */ }) => {
   let mapContainer;
 
   useEffect(() => {
@@ -122,11 +124,13 @@ function MyMap() {
     var retinaUrl = "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey={apiKey}";
     
     L.tileLayer(isRetina ? retinaUrl : baseUrl, {
-      attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>',
+      attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | <a href="https://openmaptiles.org/" rel="nofollow" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" rel="nofollow" target="_blank">© OpenStreetMap</a> contributors',
       apiKey: myAPIKey,
       maxZoom: 20,
       id: 'osm-bright',
     }).addTo(map);
+
+    mapIsReadyCallback(map);
 
   }, [mapContainer]);
 
@@ -155,7 +159,7 @@ import './my-map.scss';
 import olms from 'ol-mapbox-style';
 import * as proj from 'ol/proj';
 
-function MyMap() {
+const MyMap = ({mapIsReadyCallback /* To be triggered when a map object is created */ }) => {
   let mapContainer;
 
   useEffect(() => {
@@ -171,7 +175,10 @@ function MyMap() {
     olms(mapContainer, `${mapStyle}?apiKey=${myAPIKey}`).then((map) => {
       map.getView().setCenter(proj.transform([initialState.lng, initialState.lat], 'EPSG:4326', 'EPSG:3857'));
       map.getView().setZoom(initialState.zoom);
+
+      mapIsReadyCallback(map);
     });
+
   }, [mapContainer]);
 
   return (

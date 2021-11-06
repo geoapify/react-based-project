@@ -3,8 +3,13 @@ import './App.scss';
 import MyMap from './components/my-map';
 
 function App() {
+
+  const mapIsReadyCallback = (map) => {
+    console.log(map);
+  };
+
   return (
-    <MyMap />
+    <MyMap mapIsReadyCallback={mapIsReadyCallback}/>
   );
 }
 
